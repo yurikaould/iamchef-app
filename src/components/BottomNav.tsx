@@ -8,7 +8,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: 'home', label: 'Home', icon: '🏠', path: '/' },
+  { id: 'home', label: 'Home', icon: '🏠', path: '/home' },
   { id: 'feed', label: 'Feed', icon: '📱', path: '/feed' },
   { id: 'add', label: 'Aggiungi', icon: '➕', path: '/add' },
   { id: 'favorites', label: 'Preferiti', icon: '❤️', path: '/favorites' },
@@ -24,8 +24,8 @@ export default function BottomNav() {
   };
 
   const isActive = (path: string) => {
-    if (path === '/') {
-      return location.pathname === '/';
+    if (path === '/home') {
+      return location.pathname === '/home';
     }
     return location.pathname.startsWith(path);
   };

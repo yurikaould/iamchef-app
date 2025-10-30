@@ -1,13 +1,15 @@
 import type { ReactNode } from 'react';
+import logoImg from '../images/logo.png';
 
 interface TopBarProps {
   title: string;
   back?: boolean;
   onBack?: () => void;
   children?: ReactNode;
+  showLogo?: boolean;
 }
 
-export default function TopBar({ title, back = false, onBack, children }: TopBarProps) {
+export default function TopBar({ title, back = false, onBack, children, showLogo = false }: TopBarProps) {
   return (
     <header className="topbar">
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -19,6 +21,13 @@ export default function TopBar({ title, back = false, onBack, children }: TopBar
           >
             ←
           </button>
+        )}
+        {showLogo && (
+          <img 
+            src={logoImg} 
+            alt="I AM CHEF Logo" 
+            className="topbar-logo"
+          />
         )}
         <h1>{title}</h1>
       </div>

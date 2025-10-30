@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <div className="app">
-      <TopBar title="I AM CHEF" />
+      <TopBar title="I AM CHEF" showLogo={true} />
       
       <div className="page-container">
         {/* Welcome Section */}
