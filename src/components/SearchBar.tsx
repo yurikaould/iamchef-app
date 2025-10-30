@@ -101,38 +101,48 @@ export default function SearchBar({
   };
 
   return (
-    <div className="search-bar">
-      <input
-        ref={inputRef}
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder={placeholder}
-        className="search-input"
-        aria-label="Search for ingredients or recipes"
-        aria-expanded={showSuggestions}
-        aria-haspopup="listbox"
-        role="combobox"
-      />
+    <div className="search-container">
+      <div className="search-bar">
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder={placeholder}
+          className="search-input"
+          aria-label="Search for ingredients or recipes"
+          aria-expanded={showSuggestions}
+          aria-haspopup="listbox"
+          role="combobox"
+        />
+        
+        {showSuggestions && (
+          <div className="search-suggestions" role="listbox">
+            {filteredSuggestions.map((suggestion) => (
+              <div
+                key={suggestion.id}
+                className="search-suggestion"
+                onClick={() => handleSuggestionClick(suggestion)}
+                role="option"
+                aria-selected="false"
+              >
+                {suggestion.value}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
       
-      {showSuggestions && (
-        <div className="search-suggestions" role="listbox">
-          {filteredSuggestions.map((suggestion) => (
-            <div
-              key={suggestion.id}
-              className="search-suggestion"
-              onClick={() => handleSuggestionClick(suggestion)}
-              role="option"
-              aria-selected="false"
-            >
-              {suggestion.value}
-            </div>
-          ))}
-        </div>
-      )}
+      <button 
+        className="filter-button"
+        aria-label="Open filters"
+        onClick={() => {/* TODO: implement filter functionality */}}
+      >
+        ☰
+      </button>
     </div>
   );
 }

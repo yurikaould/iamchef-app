@@ -46,6 +46,9 @@ export default function RecipeCard({ recipe, onToggleFavorite }: RecipeCardProps
         ) : (
           <span>📸 Foto ricetta</span>
         )}
+        <span className="recipe-difficulty-badge">
+          {recipe.difficulty === 'easy' ? 'Facile' : recipe.difficulty === 'medium' ? 'Medio' : 'Difficile'}
+        </span>
       </div>
       
       <div className="recipe-content">
@@ -61,16 +64,16 @@ export default function RecipeCard({ recipe, onToggleFavorite }: RecipeCardProps
             <span>🕒</span>
             <span>{formatTime(recipe.time)}</span>
           </div>
-          
-          <button
-            className={`favorite-button ${recipe.isFavorite ? 'active' : ''}`}
-            onClick={handleFavoriteClick}
-            aria-label={recipe.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-            type="button"
-          >
-            {recipe.isFavorite ? '❤️' : '🤍'}
-          </button>
         </div>
+        
+        <button
+          className={`favorite-button ${recipe.isFavorite ? 'active' : ''}`}
+          onClick={handleFavoriteClick}
+          aria-label={recipe.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+          type="button"
+        >
+          {recipe.isFavorite ? '❤️' : '🤍'}
+        </button>
       </div>
     </div>
   );

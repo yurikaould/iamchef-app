@@ -1,4 +1,79 @@
-/* Global Styles for I Am Chef App - Mobile First */
+/* I AM CHEF - Modern Mobile Food App Design */
+
+:root {
+  /* Mock Design Tokens */
+  --primary: #16b03a;
+  --bg: #f7f7f8;
+  --card: #ffffff;
+  --muted: #777777;
+  --accent-star: #ff8a00;
+  --shadow: 0 8px 24px rgba(7, 7, 7, 0.08);
+  
+  /* Extended Palette */
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: var(--primary);
+  --green-700: #15803d;
+  --green-800: #166534;
+  --green-900: #14532d;
+  
+  /* Complementary Colors */
+  --orange-400: #fb923c;
+  --orange-500: var(--accent-star);
+  --red-400: #f87171;
+  --yellow-400: #facc15;
+  
+  /* Neutrals */
+  --white: #ffffff;
+  --black: #000000;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: var(--muted);
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Badge Colors */
+  --badge-bg: #efefef;
+  --badge-text: var(--gray-700);
+  
+  /* Layout */
+  --max-width: 420px;
+  --container-padding: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: var(--shadow);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-green: 0 10px 25px -5px rgb(34 197 94 / 0.3);
+  --shadow-fab: 0 8px 32px rgba(7, 7, 7, 0.16);
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 16px;
+  --radius-pill: 24px;
+  --radius-circle: 50%;
+  
+  /* Typography */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 160ms ease;
+  --transition-base: 200ms ease;
+}
 
 * {
   margin: 0;
@@ -9,6 +84,7 @@
 html {
   width: 100vw;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 #root {
@@ -138,18 +214,17 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
-  color: #333;
+  background: var(--bg);
+  color: var(--gray-800);
   line-height: 1.6;
   margin: 0;
   padding: 0;
   width: 100vw;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
 .app {
@@ -158,7 +233,36 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
+}
+
+/* Container for mobile-first design */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  width: 100%;
+}
+
+.app {
   padding: 0;
+  position: relative;
+}
+
+/* Global background pattern */
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 20%, var(--green-100) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--green-50) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, var(--green-100) 0%, transparent 50%);
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Page Container */
@@ -172,50 +276,65 @@ body {
   box-sizing: border-box;
 }
 
-/* Top Bar */
+/* TopBar - Mock Design */
 .topbar {
-  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 50%, #43A047 100%);
-  color: white;
-  padding: 12px 20px;
+  background: var(--primary);
+  color: var(--black);
+  padding: var(--container-padding);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
-  min-height: 64px;
+  min-height: 48px;
+  max-height: 56px;
   width: 100%;
   box-sizing: border-box;
-  backdrop-filter: blur(10px);
+  gap: 8px;
+  /* Bordi inferiori arrotondati come nel mock */
+  border-bottom-left-radius: var(--radius-2xl);
+  border-bottom-right-radius: var(--radius-2xl);
 }
 
 .topbar h1 {
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  color: var(--black);
+  margin: 0;
+  text-align: center;
 }
 
 .topbar-logo {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
-  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-  transition: transform 0.3s ease;
-}
-
-.topbar-logo:hover {
-  transform: scale(1.1);
+  /* Logo rimane bianco con filter */
+  filter: brightness(0) invert(1);
 }
 
 .topbar-back {
+  position: absolute;
+  left: var(--container-padding);
   background: none;
   border: none;
-  color: white;
+  color: var(--black);
   font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.topbar-back:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.topbar-back:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
 }
 
 /* Welcome Section */
@@ -262,7 +381,28 @@ body {
   }
 }
 
-/* Search Row */
+/* Welcome Section */
+.welcome-section {
+  padding: 20px 0 16px;
+  text-align: left;
+}
+
+.welcome-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 16px 0;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 12px 0;
+}
+
+/* Search Row (legacy) */
 .search-row {
   display: flex;
   gap: 8px;
@@ -277,158 +417,211 @@ body {
   }
 }
 
+/* SearchBar Container */
+.search-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
 .search-bar {
   flex: 1;
   position: relative;
 }
 
+/* Search Input Pill */
 .search-input {
   width: 100%;
-  padding: 14px 20px;
-  border: 2px solid #e8f5e8;
-  border-radius: 30px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-pill);
   font-size: 16px;
   outline: none;
-  transition: all 0.3s ease;
-  background: linear-gradient(145deg, #ffffff, #f9fff9);
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+  transition: box-shadow var(--transition-fast);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--gray-800);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
 }
 
 .search-input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.2);
-  transform: translateY(-1px);
+  box-shadow: var(--shadow), 0 0 0 2px rgba(22, 176, 58, 0.2);
 }
 
+/* Search Suggestions Dropdown */
 .search-suggestions {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: linear-gradient(145deg, #ffffff, #fafffe);
-  border: 1px solid rgba(76, 175, 80, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
   z-index: 10;
   max-height: 240px;
   overflow-y: auto;
-  margin-top: 4px;
-  backdrop-filter: blur(10px);
+  margin-top: 6px;
 }
 
 .search-suggestion {
-  padding: 14px 20px;
+  padding: 12px 16px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
-  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--gray-100);
+  transition: background-color var(--transition-fast);
   font-weight: 500;
-  color: #2E7D2E;
+  color: var(--gray-700);
 }
 
 .search-suggestion:hover {
-  background: linear-gradient(145deg, #f9fff9, #e8f8e8);
-  transform: translateX(4px);
-  color: #4CAF50;
+  background: var(--gray-50);
 }
 
 .search-suggestion:last-child {
   border-bottom: none;
 }
 
+/* Filter Button */
 .filter-button {
-  background: linear-gradient(145deg, #ffffff, #f9fff9);
-  border: 2px solid #e8f5e8;
-  border-radius: 50%;
-  width: 52px;
-  height: 52px;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
-  font-size: 18px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .filter-button:hover {
-  border-color: #4CAF50;
-  background: linear-gradient(145deg, #f9fff9, #e8f8e8);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.2);
+  transform: scale(1.05);
 }
 
-/* Badge Row */
+.filter-button:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* Chips/Filtri Container */
+.chips-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  padding: 2px;
+}
+
+.chip {
+  background: var(--card);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-200);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.chip.active {
+  background: var(--green-50);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.chip:hover {
+  border-color: var(--primary);
+}
+
+/* Badge Ingredienti Container */
+.badge-container {
+  margin-bottom: 16px;
+}
+
 .badge-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   min-height: 40px;
   align-items: flex-start;
 }
 
+/* Badge Ingredienti */
 .ingredient-badge {
-  background: linear-gradient(135deg, #4CAF50, #66BB6A);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   animation: fadeIn 0.3s ease;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
-  transition: all 0.2s ease;
+  transition: background-color var(--transition-fast);
 }
 
 .ingredient-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  background: var(--gray-200);
 }
 
 .badge-remove {
   background: none;
   border: none;
-  color: white;
+  color: var(--muted);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
   padding: 2px;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  border-radius: var(--radius-circle);
+  transition: color var(--transition-fast);
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .badge-remove:hover {
-  background-color: rgba(255,255,255,0.2);
+  color: var(--gray-900);
 }
 
 /* Search Button */
 .search-button {
-  background: linear-gradient(135deg, #4CAF50, #66BB6A);
-  color: white;
+  background: var(--primary);
+  color: var(--black);
   border: none;
-  padding: 14px 28px;
-  border-radius: 30px;
+  padding: 14px 24px;
+  border-radius: var(--radius-xl);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-bottom: 24px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  margin-bottom: 20px;
   width: 100%;
-  max-width: 220px;
-  margin-left: auto;
-  margin-right: auto;
   display: block;
-  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  box-shadow: var(--shadow);
 }
 
 .search-button:hover {
-  background: linear-gradient(135deg, #43A047, #4CAF50);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.4);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.search-button:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
 }
 
 .search-button:disabled {
@@ -471,44 +664,52 @@ body {
   margin-bottom: 20px;
 }
 
+/* Recipe Cards - Mock Design */
 .recipe-card {
-  background: linear-gradient(145deg, #ffffff, #fafffe);
-  border-radius: 16px;
+  background: var(--card);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
-  border: 1px solid rgba(76, 175, 80, 0.1);
+  border: none;
 }
 
 .recipe-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.2);
-  border-color: rgba(76, 175, 80, 0.2);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .recipe-image {
   width: 100%;
-  height: 110px;
-  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  height: 140px;
+  background: var(--gray-100);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #4CAF50;
+  color: var(--muted);
   font-size: 24px;
   position: relative;
   overflow: hidden;
 }
 
-.recipe-image::before {
-  content: '';
+.recipe-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-difficulty-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
-  animation: shimmer 2s infinite;
+  top: 8px;
+  right: 8px;
+  background: var(--primary);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: var(--radius-lg);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 @keyframes shimmer {
@@ -524,31 +725,22 @@ body {
 }
 
 .recipe-content {
-  padding: 8px;
-}
-
-@media (min-width: 480px) {
-  .recipe-content {
-    padding: 12px;
-  }
+  padding: 10px 12px 12px;
+  background: var(--card);
+  position: relative;
 }
 
 .recipe-title {
   font-size: 14px;
-  font-weight: 700;
-  color: #2E7D2E;
-  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 6px;
   line-height: 1.3;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  white-space: nowrap;
-}
-
-@media (min-width: 480px) {
-  .recipe-title {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
 }
 
 .recipe-meta {
@@ -556,17 +748,47 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  color: #4CAF50;
-  font-weight: 500;
+  color: var(--muted);
+  gap: 8px;
 }
 
 .recipe-rating {
   display: flex;
   align-items: center;
   gap: 3px;
-  background: rgba(255, 193, 7, 0.1);
-  padding: 2px 6px;
-  border-radius: 8px;
+  color: var(--accent-star);
+  font-weight: 600;
+}
+
+/* Heart icon positioning */
+.favorite-button {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-circle);
+  transition: transform var(--transition-fast);
+}
+
+.favorite-button:hover {
+  transform: scale(1.1);
+}
+
+.favorite-button:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* Recipe Grid */
+.recipes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 100px; /* Space for FAB and bottom nav */
 }
 
 .recipe-time {
@@ -592,21 +814,23 @@ body {
   color: #e91e63;
 }
 
-/* Floating Action Button */
+/* FAB - Mock Design */
 .fab {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
+  bottom: 62px; /* Above bottom nav */
+  left: 50%;
+  transform: translateX(-50%);
   width: 64px;
   height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #4CAF50, #66BB6A);
-  color: white;
+  border-radius: var(--radius-circle);
+  background: var(--primary);
+  color: var(--white);
   border: none;
   font-size: 28px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-fab);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   z-index: 50;
   display: flex;
   align-items: center;
@@ -614,62 +838,88 @@ body {
 }
 
 .fab:hover {
-  background: linear-gradient(135deg, #43A047, #4CAF50);
-  transform: scale(1.15);
-  box-shadow: 0 8px 28px rgba(76, 175, 80, 0.5);
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: var(--shadow-fab), 0 12px 40px rgba(7, 7, 7, 0.24);
 }
 
 .fab:active {
-  transform: scale(0.95);
+  transform: translateX(-50%) scale(0.95);
 }
 
-/* Bottom Navigation */
+.fab:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
+}
+
+/* BottomNav - Mock Design */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,255,248,0.98) 100%);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(76, 175, 80, 0.1);
-  padding: 12px 0;
+  background: var(--card);
+  border-top: 1px solid var(--gray-200);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  padding: 10px 20px;
   z-index: 100;
   width: 100vw;
   box-sizing: border-box;
-  box-shadow: 0 -4px 20px rgba(76, 175, 80, 0.1);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .bottom-nav-container {
   width: 100%;
   margin: 0;
-  padding: 0 16px;
+  padding: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  position: relative;
+}
+
+/* Spazio centrale per FAB */
+.bottom-nav-container::before {
+  content: '';
+  width: 64px;
+  height: 1px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 10px 12px;
-  color: #888;
+  gap: 2px;
+  padding: 6px 12px;
+  color: var(--muted);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: color var(--transition-fast);
   cursor: pointer;
   background: none;
   border: none;
-  border-radius: 12px;
-  position: relative;
+  border-radius: var(--radius-md);
+  min-width: 44px;
+  flex: 1;
+  max-width: 80px;
+}
+
+.nav-item:hover {
+  color: var(--primary);
 }
 
 .nav-item.active {
-  color: #4CAF50;
-  background: rgba(76, 175, 80, 0.1);
+  color: var(--primary);
+}
+
+.nav-item:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 2px;
 }
 
 .nav-item.active::before {
@@ -828,23 +1078,38 @@ body {
 .recipe-image-large {
   flex: 1;
   position: relative;
-  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  background: linear-gradient(135deg, var(--green-100), var(--green-200));
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+.recipe-image-large::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(76, 175, 80, 0.1) 100%);
+  z-index: 1;
+}
+
 .recipe-image-large img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .placeholder-large {
-  font-size: 80px;
-  color: #4CAF50;
-  opacity: 0.5;
+  font-size: 120px;
+  color: var(--green-500);
+  opacity: 0.6;
+  text-shadow: var(--shadow-md);
+  z-index: 2;
+  position: relative;
 }
 
 .recipe-overlay {
@@ -1410,4 +1675,123 @@ body {
 
 .error-state p {
   color: #666;
+}
+
+/* RecipeDetail - Mock Design */
+.recipe-detail-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  padding: 16px;
+  border-top: 1px solid var(--gray-200);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-ingredienti {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  flex: 1;
+}
+
+.btn-ingredienti:hover {
+  transform: translateY(-1px);
+}
+
+.btn-cucina-ora {
+  background: var(--card);
+  color: var(--gray-800);
+  border: 1px solid var(--gray-300);
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  box-shadow: var(--shadow-light);
+  flex: 1;
+}
+
+.btn-cucina-ora:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.recipe-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 var(--container-padding);
+}
+
+.portions-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.portions-btn {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.portions-number {
+  font-weight: 600;
+  color: var(--gray-800);
+  min-width: 20px;
+  text-align: center;
+}
+
+.difficulty-slider {
+  flex: 1;
+}
+
+.difficulty-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  outline: none;
+}
+
+.difficulty-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: var(--radius-circle);
+  cursor: pointer;
+}
+
+.difficulty-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
 }

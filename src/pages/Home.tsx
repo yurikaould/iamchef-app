@@ -39,34 +39,34 @@ export default function Home() {
     <div className="app">
       <TopBar title="I AM CHEF" showLogo={true} />
       
-      <div className="page-container">
+      <div className="container">
         {/* Welcome Section */}
         <section className="welcome-section">
-          <h2 className="welcome-title">Benvenuto in I AM CHEF</h2>
-          <p className="welcome-subtitle">Incominciamo a cucinare!</p>
+          <h2 className="welcome-title">Incominciamo a cucinare?</h2>
         </section>
 
         {/* Search Section */}
-        <section className="search-section">
-          <div className="search-row">
-            <SearchBar
-              placeholder="Cerca ingredienti o ricette..."
-              onSelectSuggestion={handleSelectSuggestion}
-              onSearch={handleSearch}
-            />
-            <button 
-              className="filter-button"
-              aria-label="Open filters"
-              type="button"
-            >
-              🔍
-            </button>
-          </div>
+        <SearchBar
+          placeholder="Cerca ricette"
+          onSelectSuggestion={handleSelectSuggestion}
+          onSearch={handleSearch}
+        />
 
-          {/* Ingredient Badges */}
+        {/* Category Chips */}
+        <div className="chips-container">
+          <div className="chip active">Italiana</div>
+          <div className="chip">Veloce</div>
+          <div className="chip">Vegetariana</div>
+          <div className="chip">Dessert</div>
+          <div className="chip">Primo</div>
+          <div className="chip">Secondo</div>
+        </div>
+
+        {/* Ingredient Badges */}
+        <div className="badge-container">
           <div className="badge-row" role="list" aria-label="Selected ingredients">
             {selectedIngredients.length === 0 && (
-              <p style={{ color: '#999', fontSize: '14px', margin: 0 }}>
+              <p style={{ color: 'var(--muted)', fontSize: '14px', margin: 0 }}>
                 Aggiungi ingredienti per iniziare la ricerca
               </p>
             )}
@@ -84,17 +84,36 @@ export default function Home() {
             className="search-button"
             onClick={handleSearch}
             disabled={selectedIngredients.length === 0}
-            aria-label="Search recipes with selected ingredients"
+            aria-label="Cerca ricette"
             type="button"
           >
-            Cerca Ricette
+            Cerca
           </button>
-        </section>
+        </div>
 
         {/* Featured Recipes Section */}
         <section className="featured-section">
           <h2 className="section-title">Ricette in evidenza</h2>
-          <div className="cards-grid">
+          
+          {/* Link to Feed */}
+          <div style={{ textAlign: 'right', marginBottom: '16px' }}>
+            <button 
+              onClick={() => navigate('/feed')}
+              style={{ 
+                background: 'none', 
+                border: 'none', 
+                color: 'var(--primary)', 
+                fontSize: '14px', 
+                fontWeight: '600',
+                cursor: 'pointer',
+                textDecoration: 'none'
+              }}
+            >
+              Vai al Feed →
+            </button>
+          </div>
+          
+          <div className="recipes-grid">
             {featuredRecipes.map((recipe) => (
               <RecipeCard
                 key={recipe.id}
@@ -110,7 +129,7 @@ export default function Home() {
       <FloatingActionButton
         to="/feed"
         ariaLabel="Go to recipe feed"
-        icon="📱"
+        icon="+"
       />
 
       {/* Bottom Navigation */}
