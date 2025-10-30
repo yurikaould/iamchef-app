@@ -15,4 +15,5 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
     },
   },
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg'],
 })

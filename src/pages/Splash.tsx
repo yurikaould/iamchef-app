@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logoImg from '../images/logo.png';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ export default function Splash() {
     <div className={`splash-screen ${fadeOut ? 'fade-out' : ''}`}>
       <div className="splash-content">
         <div className="splash-logo">
-          <img src={logoImg} alt="I AM CHEF Logo" />
+          <img src="/logo.png" alt="I AM CHEF Logo" />
         </div>
         <h1 className="splash-title">I AM CHEF</h1>
         <p className="splash-subtitle">Incominciamo a cucinare!</p>

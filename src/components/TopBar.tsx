@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import logoImg from '../images/logo.png';
 
 interface TopBarProps {
   title: string;
@@ -24,7 +23,7 @@ export default function TopBar({ title, back = false, onBack, children, showLogo
         )}
         {showLogo && (
           <img 
-            src={logoImg} 
+            src="/logo.png" 
             alt="I AM CHEF Logo" 
             className="topbar-logo"
           />
