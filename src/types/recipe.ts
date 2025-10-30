@@ -11,6 +11,19 @@ export interface Recipe {
   servings?: number;
   calories?: number;
   isFavorite?: boolean;
+  // Additional fields for detailed view
+  cost?: 'low' | 'medium' | 'high';
+  healthiness?: number; // 1-10 scale
+  dishType?: string;
+  allergens?: string[];
+  sustainability?: number; // 1-10 scale
+  diet?: string[]; // vegetarian, vegan, gluten-free, etc.
+  nutritionalInfo?: {
+    protein?: number;
+    carbs?: number;
+    fat?: number;
+    fiber?: number;
+  };
 }
 
 export interface RecipeContextType {
@@ -21,6 +34,7 @@ export interface RecipeContextType {
   clearIngredients: () => void;
   toggleFavorite: (recipeId: string) => void;
   searchRecipes: (query: string) => Recipe[];
+  getFilteredRecipes: () => Recipe[];
 }
 
 export interface SearchSuggestion {
