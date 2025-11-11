@@ -42,7 +42,7 @@ export default function Home() {
       }
       main={
         <div className="container">
-          {/* Welcome Section - UPDATED */}
+          {/* Welcome Section - FORCE REFRESH */}
           <section className="welcome-section">
             <h2 className="welcome-title">Incominciamo a cucinare?</h2>
           </section>
