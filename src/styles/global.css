@@ -279,7 +279,7 @@ body {
 /* TopBar - Mock Design */
 .topbar {
   background: var(--primary);
-  color: var(--black);
+  color: white;
   padding: var(--container-padding);
   display: flex;
   align-items: center;
@@ -292,16 +292,13 @@ body {
   width: 100%;
   box-sizing: border-box;
   gap: 8px;
-  /* Bordi inferiori arrotondati come nel mock */
-  border-bottom-left-radius: var(--radius-2xl);
-  border-bottom-right-radius: var(--radius-2xl);
 }
 
 .topbar h1 {
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 700;
-  color: var(--black);
+  color: white;
   margin: 0;
   text-align: center;
 }
