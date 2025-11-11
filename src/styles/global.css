@@ -1040,14 +1040,15 @@ body {
   right: 0;
   background: var(--card);
   border-top: 1px solid var(--green-100);
-  border-top-left-radius: var(--radius-xl);
-  border-top-right-radius: var(--radius-xl);
   padding: 16px 0;
   z-index: 100;
   width: 100vw;
   box-sizing: border-box;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   margin: 0;
+  margin-left: calc(-1 * var(--container-padding));
+  margin-right: calc(-1 * var(--container-padding));
+  transform: translateX(0);
 }
 
 .bottom-nav-container {
