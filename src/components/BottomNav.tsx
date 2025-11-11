@@ -8,11 +8,8 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: 'home', label: 'Home', icon: '🏠', path: '/home' },
-  { id: 'feed', label: 'Feed', icon: '📱', path: '/feed' },
-  { id: 'add', label: 'Aggiungi', icon: '➕', path: '/add' },
-  { id: 'favorites', label: 'Preferiti', icon: '❤️', path: '/favorites' },
-  { id: 'profile', label: 'Profilo', icon: '👤', path: '/profile' },
+  { id: 'home', label: 'Home', icon: '⌂', path: '/home' },
+  { id: 'feed', label: 'Feed', icon: '⧉', path: '/feed' },
 ];
 
 export default function BottomNav() {

@@ -7,18 +7,28 @@ interface SearchBarProps {
   onSearch?: () => void;
 }
 
-// Mock data for search suggestions
+// Mock data for search suggestions - Common Italian ingredients
 const mockSuggestions: SearchSuggestion[] = [
   { id: '1', value: 'pomodoro', type: 'ingredient' },
   { id: '2', value: 'basilico', type: 'ingredient' },
   { id: '3', value: 'mozzarella', type: 'ingredient' },
   { id: '4', value: 'aglio', type: 'ingredient' },
   { id: '5', value: 'pasta', type: 'ingredient' },
-  { id: '6', value: 'pollo', type: 'ingredient' },
-  { id: '7', value: 'parmigiano', type: 'ingredient' },
-  { id: '8', value: 'cipolla', type: 'ingredient' },
-  { id: '9', value: 'olio oliva', type: 'ingredient' },
-  { id: '10', value: 'sale', type: 'ingredient' },
+  { id: '6', value: 'spaghetti', type: 'ingredient' },
+  { id: '7', value: 'pollo', type: 'ingredient' },
+  { id: '8', value: 'parmigiano', type: 'ingredient' },
+  { id: '9', value: 'cipolla', type: 'ingredient' },
+  { id: '10', value: 'olio oliva', type: 'ingredient' },
+  { id: '11', value: 'sale', type: 'ingredient' },
+  { id: '12', value: 'pepe', type: 'ingredient' },
+  { id: '13', value: 'uova', type: 'ingredient' },
+  { id: '14', value: 'riso', type: 'ingredient' },
+  { id: '15', value: 'carote', type: 'ingredient' },
+  { id: '16', value: 'zucchine', type: 'ingredient' },
+  { id: '17', value: 'melanzane', type: 'ingredient' },
+  { id: '18', value: 'peperoni', type: 'ingredient' },
+  { id: '19', value: 'funghi', type: 'ingredient' },
+  { id: '20', value: 'patate', type: 'ingredient' },
 ];
 
 // Custom hook for debounced value
@@ -39,7 +49,7 @@ function useDebouncedValue(value: string, delay: number) {
 }
 
 export default function SearchBar({ 
-  placeholder = "Cerca ingredienti o ricette...", 
+  placeholder = "Aggiungi ingredienti che hai a casa...", 
   onSelectSuggestion,
   onSearch 
 }: SearchBarProps) {
@@ -101,48 +111,38 @@ export default function SearchBar({
   };
 
   return (
-    <div className="search-container">
-      <div className="search-bar">
-        <input
-          ref={inputRef}
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          placeholder={placeholder}
-          className="search-input"
-          aria-label="Search for ingredients or recipes"
-          aria-expanded={showSuggestions}
-          aria-haspopup="listbox"
-          role="combobox"
-        />
-        
-        {showSuggestions && (
-          <div className="search-suggestions" role="listbox">
-            {filteredSuggestions.map((suggestion) => (
-              <div
-                key={suggestion.id}
-                className="search-suggestion"
-                onClick={() => handleSuggestionClick(suggestion)}
-                role="option"
-                aria-selected="false"
-              >
-                {suggestion.value}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    <div className="search-bar">
+      <input
+        ref={inputRef}
+        type="text"
+        value={query}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        placeholder={placeholder}
+        className="search-input"
+        aria-label="Aggiungi ingredienti che hai a casa"
+        aria-expanded={showSuggestions}
+        aria-haspopup="listbox"
+        role="combobox"
+      />
       
-      <button 
-        className="filter-button"
-        aria-label="Open filters"
-        onClick={() => {/* TODO: implement filter functionality */}}
-      >
-        ☰
-      </button>
+      {showSuggestions && (
+        <div className="search-suggestions" role="listbox">
+          {filteredSuggestions.map((suggestion) => (
+            <div
+              key={suggestion.id}
+              className="search-suggestion"
+              onClick={() => handleSuggestionClick(suggestion)}
+              role="option"
+              aria-selected="false"
+            >
+              {suggestion.value}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

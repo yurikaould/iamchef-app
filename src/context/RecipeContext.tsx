@@ -22,7 +22,6 @@ const mockRecipes: Recipe[] = [
       'Spegni il fuoco e aggiungi il composto di uova mescolando velocemente',
       'Servi subito con pepe nero macinato fresco'
     ],
-    image: 'https://images.unsplash.com/photo-1608756687911-aa1c39a71c80?w=400&h=300&fit=crop',
     category: 'Primi Piatti',
     servings: 4,
     calories: 420,
@@ -48,7 +47,6 @@ const mockRecipes: Recipe[] = [
     difficulty: 'medium',
     ingredients: ['riso carnaroli', 'funghi porcini', 'parmigiano', 'brodo vegetale', 'cipolla', 'vino bianco'],
     instructions: ['Soffriggi la cipolla', 'Tosta il riso', 'Aggiungi brodo gradualmente', 'Manteca con parmigiano'],
-    image: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&h=300&fit=crop',
     category: 'Secondi Piatti',
     servings: 4,
     calories: 380,
@@ -62,7 +60,6 @@ const mockRecipes: Recipe[] = [
     difficulty: 'medium',
     ingredients: ['farina', 'pomodoro', 'mozzarella', 'basilico', 'olio', 'lievito'],
     instructions: ['Prepara impasto', 'Lascia lievitare', 'Stendi e condisci', 'Cuoci in forno'],
-    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
     category: 'Primi Piatti',
     servings: 4,
     calories: 350,
@@ -76,7 +73,6 @@ const mockRecipes: Recipe[] = [
     difficulty: 'easy',
     ingredients: ['mascarpone', 'caffè', 'savoiardi', 'uova', 'zucchero', 'cacao'],
     instructions: ['Prepara crema al mascarpone', 'Inzuppa savoiardi', 'Componi a strati'],
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
     category: 'Dolci',
     servings: 6,
     calories: 450,
@@ -90,24 +86,9 @@ const mockRecipes: Recipe[] = [
     difficulty: 'easy',
     ingredients: ['pasta', 'pomodoro', 'basilico', 'aglio', 'olio'],
     instructions: ['Cuoci la pasta', 'Prepara sugo semplice', 'Manteca e servi'],
-    image: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400&h=300&fit=crop',
     category: 'Primi Piatti',
     servings: 4,
     calories: 300,
-    isFavorite: false,
-  },
-  {
-    id: '6',
-    title: 'Insalata Caprese',
-    rating: 4.3,
-    time: 10,
-    difficulty: 'easy',
-    ingredients: ['mozzarella', 'pomodoro', 'basilico', 'olio'],
-    instructions: ['Taglia mozzarella e pomodoro', 'Componi piatto', 'Condisci'],
-    image: 'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=400&h=300&fit=crop',
-    category: 'Antipasti',
-    servings: 2,
-    calories: 250,
     isFavorite: false,
   },
 ];
@@ -164,22 +145,26 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
     );
   };
 
-  const getFilteredRecipes = (): Recipe[] => {
-    if (selectedIngredients.length === 0) return recipes;
-    
+  const getFilteredRecipes = () => {
+    if (selectedIngredients.length === 0) {
+      return recipes;
+    }
+
     // Calculate compatibility score for each recipe
     const recipesWithScore = recipes.map(recipe => {
-      const matchingIngredients = recipe.ingredients.filter(ingredient =>
-        selectedIngredients.some(selected => 
-          ingredient.toLowerCase().includes(selected.toLowerCase()) ||
-          selected.toLowerCase().includes(ingredient.toLowerCase())
+      const matchingIngredients = selectedIngredients.filter(selectedIngredient => 
+        recipe.ingredients.some(recipeIngredient => 
+          recipeIngredient.toLowerCase().includes(selectedIngredient.toLowerCase()) ||
+          selectedIngredient.toLowerCase().includes(recipeIngredient.toLowerCase()) ||
+          // Special matches for common ingredient variations
+          (selectedIngredient === 'pasta' && ['spaghetti', 'penne', 'linguine', 'rigatoni'].some(p => recipeIngredient.toLowerCase().includes(p))) ||
+          (selectedIngredient === 'formaggio' && ['parmigiano', 'pecorino', 'mozzarella', 'gorgonzola'].some(f => recipeIngredient.toLowerCase().includes(f))) ||
+          (recipeIngredient.toLowerCase() === selectedIngredient.toLowerCase())
         )
       );
       
       const compatibilityScore = matchingIngredients.length / recipe.ingredients.length;
-      const hasMatchingIngredients = matchingIngredients.length > 0;
-      
-      return {
+      const hasMatchingIngredients = matchingIngredients.length > 0;      return {
         ...recipe,
         compatibilityScore,
         matchingIngredients: matchingIngredients.length,

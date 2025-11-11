@@ -150,6 +150,19 @@ export default function RecipeDetail() {
             </div>
           </div>
 
+          {recipe.diet && recipe.diet.length > 0 && (
+            <div className="detail-section">
+              <h2 className="section-title-detail">Dieta</h2>
+              <div className="diet-list">
+                {recipe.diet.map((dietType, index) => (
+                  <span key={index} className="diet-badge">
+                    🌱 {dietType}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           {recipe.allergens && recipe.allergens.length > 0 && (
             <div className="detail-section">
               <h2 className="section-title-detail">Allergeni</h2>

@@ -72,7 +72,7 @@ export default function RecipeCard({ recipe, onToggleFavorite }: RecipeCardProps
           aria-label={recipe.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           type="button"
         >
-          {recipe.isFavorite ? '❤️' : '🤍'}
+          ♥
         </button>
       </div>
     </div>

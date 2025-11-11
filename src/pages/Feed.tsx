@@ -23,12 +23,25 @@ export default function Feed() {
   }, [selectedIngredients, getFilteredRecipes]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    // Ignore touch events on buttons
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) {
+      return;
+    }
+    
     startY.current = e.touches[0].clientY;
     isDragging.current = true;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging.current) return;
+    
+    // Ignore if touching buttons
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) {
+      return;
+    }
+    
     currentY.current = e.touches[0].clientY;
     const deltaY = currentY.current - startY.current;
     
@@ -50,15 +63,33 @@ export default function Feed() {
     if (Math.abs(deltaY) > threshold) {
       if (deltaY < 0 && currentIndex < recipes.length - 1) {
         // Swipe up - next recipe
-        setCurrentIndex(prev => prev + 1);
+        setCurrentIndex(prev => Math.min(prev + 1, recipes.length - 1));
       } else if (deltaY > 0 && currentIndex > 0) {
         // Swipe down - previous recipe
-        setCurrentIndex(prev => prev - 1);
+        setCurrentIndex(prev => Math.max(prev - 1, 0));
       }
     }
 
     isDragging.current = false;
     setExpandedIngredients(null); // Close expanded ingredients on swipe
+  };
+
+  const goToPrevious = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('goToPrevious - currentIndex:', currentIndex, 'recipes.length:', recipes.length);
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const goToNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('goToNext - currentIndex:', currentIndex, 'recipes.length:', recipes.length);
+    if (currentIndex < recipes.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const currentRecipe = recipes[currentIndex];
@@ -84,7 +115,7 @@ export default function Feed() {
   if (recipes.length === 0) {
     return (
       <div className="app">
-        <div className="feed-header">
+        <div className="top-bar">
           <button onClick={() => navigate('/home')} className="back-button">
             ← Torna alla ricerca
           </button>
@@ -93,8 +124,9 @@ export default function Feed() {
           </div>
         </div>
         
-        <div className="feed-empty">
+        <div className="container">
           <div className="empty-state">
+            <div className="empty-icon">🔍</div>
             <h2>Nessuna ricetta trovata</h2>
             <p>Prova ad aggiungere ingredienti diversi per trovare ricette compatibili</p>
           </div>
@@ -105,12 +137,12 @@ export default function Feed() {
 
   return (
     <div className="app">
-      <div className="feed-header">
+      <div className="top-bar">
         <button onClick={() => navigate('/home')} className="back-button">
           ← Indietro
         </button>
         <div className="feed-info">
-          <span>{selectedIngredients.length} ingredienti • {recipes.length} ricette</span>
+          <span>{selectedIngredients.length} ingredienti • {recipes.length} ricette • Ricetta {currentIndex + 1}</span>
         </div>
       </div>
 
@@ -123,18 +155,34 @@ export default function Feed() {
       >
         <div className="recipe-card-fullscreen">
           <div className="recipe-image-large">
-            {currentRecipe.image ? (
-              <img src={currentRecipe.image} alt={currentRecipe.title} />
-            ) : (
-              <div className="placeholder-large">🍽️</div>
-            )}
+            <div className="placeholder-large">🍽️</div>
             
             <div className="recipe-overlay">
+              {/* Navigation Arrows - Always visible for debugging */}
               <button
-                className="favorite-btn-large"
+                className="nav-arrow prev"
+                onClick={goToPrevious}
+                aria-label="Ricetta precedente"
+                disabled={currentIndex === 0}
+              >
+                ↑
+              </button>
+              
+              <button
+                className="nav-arrow next"
+                onClick={goToNext}
+                aria-label="Ricetta successiva" 
+                disabled={currentIndex === recipes.length - 1}
+              >
+                ↓
+              </button>
+
+              {/* Heart Button */}
+              <button
+                className={`heart-button large ${currentRecipe.isFavorite ? 'active' : ''}`}
                 onClick={() => toggleFavorite(currentRecipe.id)}
               >
-                {currentRecipe.isFavorite ? '❤️' : '🤍'}
+                ♥
               </button>
             </div>
           </div>
@@ -142,10 +190,18 @@ export default function Feed() {
           <div className="recipe-info-panel">
             <div className="recipe-header">
               <h1 className="recipe-title-large">{currentRecipe.title}</h1>
-              <div className="recipe-meta-large">
-                <span className="rating">⭐ {currentRecipe.rating}</span>
-                <span className="time">🕒 {currentRecipe.time}min</span>
-                <span className="category">{currentRecipe.category}</span>
+              <div className="recipe-meta">
+                <div className="meta-item">
+                  <span className="icon">⭐</span>
+                  <span>{currentRecipe.rating}</span>
+                </div>
+                <div className="meta-item">
+                  <span className="icon">🕒</span>
+                  <span>{currentRecipe.time}min</span>
+                </div>
+                <div className="badge category-badge">
+                  {currentRecipe.category}
+                </div>
               </div>
             </div>
 
@@ -166,20 +222,24 @@ export default function Feed() {
                 <div className="ingredients-expanded">
                   <div className="ingredients-available">
                     <h4>✅ Ingredienti disponibili</h4>
-                    {getMatchingIngredients(currentRecipe).map((ingredient, index) => (
-                      <span key={index} className="ingredient-item available">
-                        {ingredient}
-                      </span>
-                    ))}
+                    <div className="ingredients-grid">
+                      {getMatchingIngredients(currentRecipe).map((ingredient, index) => (
+                        <span key={index} className="badge ingredient-badge available">
+                          {ingredient}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   
                   <div className="ingredients-missing">
                     <h4>❌ Ingredienti mancanti</h4>
-                    {getMissingIngredients(currentRecipe).map((ingredient, index) => (
-                      <span key={index} className="ingredient-item missing">
-                        {ingredient}
-                      </span>
-                    ))}
+                    <div className="ingredients-grid">
+                      {getMissingIngredients(currentRecipe).map((ingredient, index) => (
+                        <span key={index} className="badge ingredient-badge missing">
+                          {ingredient}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -201,7 +261,7 @@ export default function Feed() {
             </div>
 
             <button 
-              className="view-recipe-btn"
+              className="btn-primary full-width"
               onClick={() => navigate(`/recipe/${currentRecipe.id}`)}
             >
               Vedi Ricetta Completa
